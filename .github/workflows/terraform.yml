@@ -6,7 +6,8 @@ on:
       - main
   pull_request:
 
-
+  env:
+    OS_AUTH_URL: ${{ secrets.OS_AUTH_URL }}
 
 jobs:
   terraform:
@@ -21,9 +22,7 @@ jobs:
         run: |
           echo Environment
           echo OS_AUTH_URL: $OS_AUTH_URL
-          echo OS_AUTH_URL: ${{ secrets.OS_AUTH_URL }}
-        env:
-          OS_AUTH_URL: ${{ secrets.OS_AUTH_URL }}
+
     
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
