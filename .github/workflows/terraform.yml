@@ -7,7 +7,7 @@ on:
   pull_request:
 
 env:
-  OS_AUTH_URL: https://auth.cloud.ovh.net/v3/
+  OS_AUTH_URL: ${{ secrets.OS_AUTH_URL }}
   OS_IDENTITY_API_VERSION: 3
   OS_USER_DOMAIN_NAME: Default
   OS_PROJECT_DOMAIN_NAME: Default
