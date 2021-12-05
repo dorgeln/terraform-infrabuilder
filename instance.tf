@@ -8,7 +8,6 @@ resource "openstack_compute_instance_v2" "tf1" {
      ansible_user = "ubuntu"
    }
    # Name of openstack_compute_keypair_v2 resource named keypair_test
-   key_pair    = openstack_compute_keypair_v2.terrabuilder.name
    network {
      name      = "Ext-Net" # Adds the network component to reach your instance
    }
