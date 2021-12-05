@@ -65,16 +65,14 @@ jobs:
           OS_REGION_NAME: ${{ secrets.OS_REGION_NAME }}
 
       - name: Set Terraform State
-        run: |
-          echo "TFSTATE=`base64 terraform.tfstate`" >> $GITHUB_ENV
+        run: echo "TFSTATE=`base64 terraform.tfstate`" >> $GITHUB_ENV
 
       - name: Debug Terraform State
-        run: |
-          echo "${{ TFSTATE }}" | base64 -d
+        run: echo "${{ env.TFSTATE }}" | base64 -d
 
       - name: Write Terraform State to secrets
         uses: jon-grey/github-actions-secrets-creator@v1
         with:
           name: TFSTATE
-          value: ${{ TFSTATE }}
+          value: ${{ env.TFSTATE }}
           pa_token: ${{ secrets.PATOKEN }}
