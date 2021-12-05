@@ -16,9 +16,10 @@ jobs:
     
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
-        with:
-          OS_AUTH_URL: $OS_AUTH_URL
-
+        
+      - name: Terraform Format
+        id: fmt
+        run: terraform fmt -check
 
       - name: Terraform Init
         id: init
