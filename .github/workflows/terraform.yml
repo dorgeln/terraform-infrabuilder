@@ -14,13 +14,16 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Recover tfstate
+      - name: Recover Terraform State from secrets
         id: write_file
         uses: timheuer/base64-to-file@v1.1
         with:
           fileName: 'terraform.tfstate'
           fileDir: '.'
           encodedString: ${{ secrets.TFSTATE }}
+
+      - name: Debug Terraform State
+        run: cat terraform.tfstate
     
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
@@ -60,3 +63,18 @@ jobs:
           OS_USERNAME: ${{ secrets.OS_USERNAME }}
           OS_PASSWORD: ${{ secrets.OS_PASSWORD }}
           OS_REGION_NAME: ${{ secrets.OS_REGION_NAME }}
+
+      - name: Set Terraform State
+        run: |
+          echo "TFSTATE=`base64 terraform.tfstate`" >> $GITHUB_ENV
+
+      - name: Debug Terraform State
+        run: |
+          echo "${{ TFSTATE }}" | base64 -d
+
+      - name: Write Terraform State to secrets
+        uses: jon-grey/github-actions-secrets-creator@v1
+        with:
+          name: TFSTATE
+          value: ${{ TFSTATE }}
+          pa_token: ${{ secrets.PATOKEN }}
