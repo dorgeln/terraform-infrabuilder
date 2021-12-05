@@ -6,8 +6,8 @@ on:
       - main
   pull_request:
 
-  env:
-    OS_AUTH_URL: ${{ secrets.OS_AUTH_URL }}
+env:
+  OS_AUTH_URL: ${{ secrets.OS_AUTH_URL }}
 
 jobs:
   terraform:
