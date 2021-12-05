@@ -23,7 +23,9 @@ jobs:
           encodedString: ${{ secrets.TFSTATE }}
 
       - name: Debug previous Terraform State
-        if: ${{ secrets.ACTIONS_STEP_DEBUG }}
+        env:
+          DEBUG: ${{ secrets.ACTIONS_STEP_DEBUG }}
+        if: env.DEBUG
         run: cat terraform.tfstate
     
       - name: Setup Terraform
@@ -69,8 +71,10 @@ jobs:
         run: echo "TFSTATE=`base64 -w0 terraform.tfstate`" >> $GITHUB_ENV
 
       - name: Debug current Terraform State
-        if: ${{ secrets.ACTIONS_STEP_DEBUG }}
-        run: echo "${{ env.TFSTATE }}" | base64 -d
+        env:
+          DEBUG: ${{ secrets.ACTIONS_STEP_DEBUG }}
+        if: env.DEBUG
+          run: echo "${{ env.TFSTATE }}" | base64 -d
 
       - name: Write Terraform State to secrets
         uses: jon-grey/github-actions-secrets-creator@v1
