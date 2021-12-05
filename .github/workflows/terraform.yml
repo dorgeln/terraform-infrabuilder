@@ -14,8 +14,21 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
+      - name: Terraform Info
+        id: info
+        script: |
+          echo Environment
+          echo OS_AUTH_URL: $OS_AUTH_URL
+          echo OS_AUTH_URL: ${{ secrets.OS_AUTH_URL }}
+
+          
+
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
+        with:
+          OS_AUTH_URL: $OS_AUTH_URL
+
 
       - name: Terraform Init
         id: init
