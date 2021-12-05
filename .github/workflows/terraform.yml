@@ -65,7 +65,7 @@ jobs:
           OS_REGION_NAME: ${{ secrets.OS_REGION_NAME }}
 
       - name: Set Terraform State
-        run: echo "TFSTATE=`base64 terraform.tfstate`" >> $GITHUB_ENV
+        run: echo "TFSTATE='`base64 -w0 terraform.tfstate`'" >> $GITHUB_ENV
 
       - name: Debug Terraform State
         run: echo "${{ env.TFSTATE }}" | base64 -d
