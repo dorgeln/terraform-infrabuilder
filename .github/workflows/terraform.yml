@@ -13,10 +13,18 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+
+      - name: Recover tfstate
+        id: write_file
+        uses: timheuer/base64-to-file@v1.1
+        with:
+          fileName: 'terraform.tfstate'
+          fileDir: '.'
+          encodedString: ${{ secrets.TFSTATE }}
     
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
-        
+
       - name: Terraform Format
         id: fmt
         run: terraform fmt -check
