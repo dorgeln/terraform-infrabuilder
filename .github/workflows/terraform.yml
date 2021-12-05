@@ -74,7 +74,7 @@ jobs:
         env:
           DEBUG: ${{ secrets.ACTIONS_STEP_DEBUG }}
         if: env.DEBUG
-          run: echo "${{ env.TFSTATE }}" | base64 -d
+        run: echo "${{ env.TFSTATE }}" | base64 -d
 
       - name: Write Terraform State to secrets
         uses: jon-grey/github-actions-secrets-creator@v1
