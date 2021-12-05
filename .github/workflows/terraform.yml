@@ -13,20 +13,6 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-
-      - name: Recover Terraform State from secrets
-        id: write_file
-        uses: timheuer/base64-to-file@v1.1
-        with:
-          fileName: 'terraform.tfstate'
-          fileDir: '.'
-          encodedString: ${{ secrets.TFSTATE }}
-
-      - name: Debug previous Terraform State
-        env:
-          DEBUG: ${{ secrets.ACTIONS_STEP_DEBUG }}
-        if: env.DEBUG==true
-        run: cat terraform.tfstate
     
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
@@ -42,6 +28,20 @@ jobs:
       - name: Terraform Validate
         id: validate
         run: terraform validate -no-color
+
+      - name: Recover Terraform State from secrets
+        id: write_file
+        uses: timheuer/base64-to-file@v1.1
+        with:
+          fileName: 'terraform.tfstate'
+          fileDir: '.'
+          encodedString: ${{ secrets.TFSTATE }}
+
+      - name: Debug previous Terraform State
+        env:
+          DEBUG: ${{ secrets.ACTIONS_STEP_DEBUG }}
+        if: env.DEBUG==true
+        run: cat terraform.tfstate
 
       - name: Terraform Plan
         id: plan
