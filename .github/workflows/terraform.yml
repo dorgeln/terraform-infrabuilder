@@ -22,7 +22,8 @@ jobs:
           fileDir: '.'
           encodedString: ${{ secrets.TFSTATE }}
 
-      - name: Debug Terraform State
+      - name: Debug previous Terraform State
+        if: ${{ secrets.ACTIONS_STEP_DEBUG }}
         run: cat terraform.tfstate
     
       - name: Setup Terraform
@@ -67,7 +68,8 @@ jobs:
       - name: Set Terraform State
         run: echo "TFSTATE=`base64 -w0 terraform.tfstate`" >> $GITHUB_ENV
 
-      - name: Debug Terraform State
+      - name: Debug current Terraform State
+        if: ${{ secrets.ACTIONS_STEP_DEBUG }}
         run: echo "${{ env.TFSTATE }}" | base64 -d
 
       - name: Write Terraform State to secrets
