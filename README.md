@@ -17,7 +17,7 @@ gh secret set OS_PASSWORD --body "$OS_PASSWORD"
 gh secret set OS_REGION_NAME --body "$OS_REGION_NAME"
 ```
 
-If you want to use an existing terraform.tfstate file importing can be donw with:
+If you want to use an existing terraform.tfstate file importing can be done with:
 
 ```
 gh secret set TFSTATE --body "`base64 terraform.tfstate`"
